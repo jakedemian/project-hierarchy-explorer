@@ -3,7 +3,6 @@
   "displayName": "Project Hierarchy Explorer",
   "description": "Quickly and easily output your full project tree / hierarchy to a text file.",
   "version": "0.0.1",
-  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.79.0"
   },
@@ -40,6 +39,7 @@
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
+    "@types/minimatch": "^5.1.2",
     "@types/mocha": "^10.0.1",
     "@types/node": "20.2.5",
     "@types/vscode": "^1.79.0",
