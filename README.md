@@ -1,71 +1,52 @@
-# project-hierarchy-explorer README
+# Project Hierarchy Explorer
 
-This is the README for your extension "project-hierarchy-explorer". After writing up a brief description, we recommend including the following sections.
+Project Hierarchy Explorer is a Visual Studio Code extension that generates a hierarchy of your project, and outputs it into a file called `project-hierarchy.txt` located at the root of your project.
+
+![Alt text](images/project-hierarchy-animation.gif)
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Generates a project hierarchy that includes all files and directories, excluding those specified in the `ignorePatterns` setting.
+- The hierarchy is generated in a tree-like structure, providing a clear view of the project's structure.
 
-For example if there is an image subfolder under your extension project workspace:
+## Usage
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Open the command palette with `Ctrl+Shift+P` (or `F1`)
+2. Search for and run `Project Hierarchy Explorer: Generate`
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![Alt text](images/command.png)
 
-## Requirements
+3. A notification will appear upon successful generation of the hierarchy, and you can view the `project-hierarchy.txt` file at the root of your project.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+![Alt text](images/toast.png)
 
-## Extension Settings
+![Alt text](images/sample.png)
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Configuration Options
+
+### Config key
+
+All configurations are prepended with `project-hierarchy-explorer`, for example:
+
+```
+project-hierarchy-explorer.ignorePatterns
+```
+
+### `ignorePatterns`
+The `ignorePatterns` setting can be added to your workspace or user settings to ignore specific files or directories when generating the project hierarchy. It uses the glob pattern syntax.
 
 For example:
 
-This extension contributes the following settings:
+```json
+"project-hierarchy-explorer.ignorePatterns": [".git", "node_modules"]
+```
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+This will ignore any .git directories and node_modules directories when generating the project hierarchy.
 
-## Known Issues
+## Issues & Contributions
+If you find any issues or have suggestions, please report them in the issue tracker. Contributions are also welcome, please open a pull request with your changes.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## License
+### MIT
 
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+This project uses the MIT License. Please review the [MIT License](LICENSE.md) for details.

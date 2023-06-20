@@ -2,7 +2,12 @@
   "name": "project-hierarchy-explorer",
   "displayName": "Project Hierarchy Explorer",
   "description": "Quickly and easily output your full project tree / hierarchy to a text file.",
-  "version": "0.0.1",
+  "author": {
+    "name": "Jake Demian",
+    "email": "jakedemian@gmail.com"
+  },
+  "version": "1.0.0",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.79.0"
   },
@@ -10,6 +15,9 @@
     "Other"
   ],
   "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:project-hierarchy-explorer.generate"
+  ],
   "contributes": {
     "commands": [
       {
