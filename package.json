@@ -6,6 +6,7 @@
     "name": "Jake Demian",
     "email": "jakedemian@gmail.com"
   },
+  "publisher": "jake-demian",
   "version": "1.0.0",
   "icon": "images/icon.png",
   "license": "MIT",
