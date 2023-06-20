@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Minimatch } from 'minimatch';
 
 export function activate(context: vscode.ExtensionContext) {
     let disposable = vscode.commands.registerCommand('project-hierarchy-explorer.generate', () => {
@@ -27,8 +28,10 @@ function getProjectName(): string {
 
 function getDirectoryStructure(dirPath: string, prefix = ''): string {
     const dir = fs.readdirSync(dirPath);
+    const ignorePatterns = vscode.workspace.getConfiguration('project-hierarchy-explorer').get<string[]>('ignorePatterns') || [];
     let structure = '';
-    dir.forEach((file, index, array) => {
+    const filteredDir = dir.filter(file => !ignorePatterns.some(pattern => new Minimatch(pattern).match(file)));
+    filteredDir.forEach((file, index, array) => {
         const filePath = path.join(dirPath, file);
         const isDir = fs.statSync(filePath).isDirectory();
         const isLast = index === array.length - 1;
