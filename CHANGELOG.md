@@ -2,8 +2,8 @@
 
 All notable changes to the "project-hierarchy-explorer" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
+## [1.0.0]
 
 - Initial release
+- Generation of project hierarchy text file
+- sole configuration `ignorePatterns` present
