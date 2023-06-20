@@ -13,8 +13,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "project-hierarchy-explorer.testGenerate",
-        "title": "Test Generate"
+        "command": "project-hierarchy-explorer.generate",
+        "title": "Project Hierarchy Explorer: Generate"
       }
     ]
   },
