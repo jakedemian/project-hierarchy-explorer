@@ -2,6 +2,10 @@
 
 All notable changes to the "project-hierarchy-explorer" extension will be documented in this file.
 
+## [1.0.2]
+
+- Version bump and sync
+
 ## [1.0.1]
 
 - Code Quality pass
