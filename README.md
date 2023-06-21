@@ -44,9 +44,9 @@ For example:
 
 This will ignore any .git directories and node_modules directories when generating the project hierarchy.
 
-## Issues & Contributions
+## Contribute
 
-If you find any issues or have suggestions, please report them in the issue tracker. Contributions are also welcome, please open a pull request with your changes.
+https://github.com/jakedemian/project-hierarchy-explorer
 
 ## License
 

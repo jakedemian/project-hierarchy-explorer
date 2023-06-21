@@ -13,6 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
       const filePath = path.join(ROOT_PATH!, OUTPUT_FILE_NAME);
       const hierarchy =
         getParentDirectoryName() + '\n' + getDirectoryStructure(ROOT_PATH!);
+
       fs.writeFileSync(filePath, hierarchy);
       vscode.window.showInformationMessage(
         'Success! Check project-hierarchy.txt in the root of your project'
