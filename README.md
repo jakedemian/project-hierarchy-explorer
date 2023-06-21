@@ -33,6 +33,7 @@ project-hierarchy-explorer.ignorePatterns
 ```
 
 ### `ignorePatterns`
+
 The `ignorePatterns` setting can be added to your workspace or user settings to ignore specific files or directories when generating the project hierarchy. It uses the glob pattern syntax.
 
 For example:
@@ -43,10 +44,12 @@ For example:
 
 This will ignore any .git directories and node_modules directories when generating the project hierarchy.
 
-## Issues & Contributions
-If you find any issues or have suggestions, please report them in the issue tracker. Contributions are also welcome, please open a pull request with your changes.
+## Contribute
+
+https://github.com/jakedemian/project-hierarchy-explorer
 
 ## License
+
 ### MIT
 
 This project uses the MIT License. Please review the [MIT License](LICENSE.md) for details.
