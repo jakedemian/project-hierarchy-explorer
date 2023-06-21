@@ -3,18 +3,16 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Minimatch } from 'minimatch';
 
+const ROOT_PATH = vscode.workspace.rootPath;
+const OUTPUT_FILE_NAME = 'project-hierarchy.txt'; // TODO will change to config
+
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     'project-hierarchy-explorer.generate',
     () => {
-      const filePath = path.join(
-        vscode.workspace.rootPath!,
-        'project-hierarchy.txt'
-      );
+      const filePath = path.join(ROOT_PATH!, OUTPUT_FILE_NAME);
       const hierarchy =
-        getProjectName() +
-        '\n' +
-        getDirectoryStructure(vscode.workspace.rootPath!);
+        getParentDirectoryName() + '\n' + getDirectoryStructure(ROOT_PATH!);
       fs.writeFileSync(filePath, hierarchy);
       vscode.window.showInformationMessage(
         'Success! Check project-hierarchy.txt in the root of your project'
@@ -25,39 +23,47 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable);
 }
 
-function getProjectName(): string {
-  const dir = fs.readdirSync(vscode.workspace.rootPath!);
-  const packageJson = dir.find(file => file === 'package.json');
-  if (packageJson) {
-    const packageJsonPath = path.join(vscode.workspace.rootPath!, packageJson);
-    const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf8');
-    const packageJsonParsed = JSON.parse(packageJsonContent);
-    return packageJsonParsed.name;
-  }
-  return 'Project';
-}
-
+// TODO add fileIgnorePatterns config, maybe just use existing ignorePatterns config?
 function getDirectoryStructure(dirPath: string, prefix = ''): string {
-  const dir = fs.readdirSync(dirPath);
-  const ignorePatterns =
+  const entries: string[] = fs.readdirSync(dirPath); // TODO should this be synchronous?
+  const ignorePatterns: string[] =
     vscode.workspace
       .getConfiguration('project-hierarchy-explorer')
       .get<string[]>('ignorePatterns') || [];
+
   let structure = '';
-  const filteredDir = dir.filter(
+  const filteredDir = entries.filter(
     file => !ignorePatterns.some(pattern => new Minimatch(pattern).match(file))
   );
+
   filteredDir.forEach((file, index, array) => {
     const filePath = path.join(dirPath, file);
-    const isDir = fs.statSync(filePath).isDirectory();
-    const isLast = index === array.length - 1;
-    structure += prefix + (isLast ? '└─ ' : '├─ ') + file + '\n';
-    if (isDir) {
+    const isDirectory = fs.statSync(filePath).isDirectory();
+    const isLastInDirectory = index === array.length - 1;
+
+    structure += prefix + (isLastInDirectory ? '└─ ' : '├─ ') + file + '\n';
+    if (isDirectory) {
       structure += getDirectoryStructure(
         filePath,
-        isLast ? prefix + '   ' : prefix + '│  '
+        isLastInDirectory ? prefix + '   ' : prefix + '│  '
       );
     }
   });
   return structure;
+}
+
+function getParentDirectoryName(): string {
+  const parentDirPath = path.join(ROOT_PATH!, '..');
+  const parentDirEntries = fs.readdirSync(parentDirPath); // TODO should this be synchronous?
+
+  const parentDirName = parentDirEntries.find(
+    file => file === path.basename(ROOT_PATH!)
+  );
+
+  if (!parentDirName) {
+    console.error('Parent directory not found');
+    return 'Root Directory';
+  }
+
+  return parentDirName;
 }
