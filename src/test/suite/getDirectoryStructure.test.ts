@@ -17,7 +17,6 @@ suite('getDirectoryStructure Test Suite', () => {
   let statStub: sinon.SinonStub;
   let getConfigurationStub: sinon.SinonStub;
 
-  // TODO move into a separate file
   const setupFileSystemMock = (fileSystemStructure: any) => {
     const stubs = new Map();
 
@@ -52,8 +51,6 @@ suite('getDirectoryStructure Test Suite', () => {
       }
     });
   };
-
-  /////////////////////////////
 
   setup(() => {
     readdirStub = sinon.stub(fs.promises, 'readdir');
