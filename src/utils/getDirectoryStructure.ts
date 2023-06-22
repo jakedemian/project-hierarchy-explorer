@@ -1,30 +1,47 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Minimatch } from 'minimatch';
-import { CONFIG, getConfiguration } from './config';
+import { getConfiguration } from './config';
+import { DirectoryReadError } from '../errors/DirectoryReadError';
 
-export function getDirectoryStructure(dirPath: string, prefix = ''): string {
-  const entries: string[] = fs.readdirSync(dirPath); // TODO should this be synchronous?
-  const ignorePatterns: string[] =
-    getConfiguration(CONFIG.ignorePatterns) || [];
+export async function getDirectoryStructure(
+  dirPath: string,
+  prefix = ''
+): Promise<string> {
+  let entries: string[];
+  try {
+    entries = await fs.promises.readdir(dirPath);
+  } catch (err: any) {
+    throw new DirectoryReadError(dirPath, err);
+  }
+
+  const ignorePatterns: string[] = getConfiguration('ignorePatterns') || [];
+  const minimatches = ignorePatterns.map(pattern => new Minimatch(pattern));
 
   let structure = '';
   const filteredDir = entries.filter(
-    file => !ignorePatterns.some(pattern => new Minimatch(pattern).match(file))
+    file => !minimatches.some(minimatch => minimatch.match(file))
   );
 
-  filteredDir.forEach((file, index, array) => {
+  for (const [index, file] of filteredDir.entries()) {
     const filePath = path.join(dirPath, file);
-    const isDirectory = fs.statSync(filePath).isDirectory();
-    const isLastInDirectory = index === array.length - 1;
+
+    let isDirectory: boolean;
+    try {
+      isDirectory = (await fs.promises.stat(filePath)).isDirectory();
+    } catch (err) {
+      throw new Error(`Failed to stat ${filePath}: ${err}`);
+    }
+
+    const isLastInDirectory = index === filteredDir.length - 1;
 
     structure += prefix + (isLastInDirectory ? '└─ ' : '├─ ') + file + '\n';
     if (isDirectory) {
-      structure += getDirectoryStructure(
+      structure += await getDirectoryStructure(
         filePath,
         isLastInDirectory ? prefix + '   ' : prefix + '│  '
       );
     }
-  });
+  }
   return structure;
 }
