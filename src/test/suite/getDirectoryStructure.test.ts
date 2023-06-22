@@ -1,5 +1,4 @@
 import * as assert from 'assert';
-// import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getDirectoryStructure } from '../../utils/getDirectoryStructure';
@@ -8,6 +7,7 @@ import * as sinon from 'sinon';
 
 import * as sinonChai from 'sinon-chai';
 import { DirectoryReadError } from '../../errors/DirectoryReadError';
+import * as config from '../../utils/config';
 const dedent = require('dedent');
 
 use(sinonChai);
@@ -15,6 +15,7 @@ use(sinonChai);
 suite('getDirectoryStructure Test Suite', () => {
   let readdirStub: sinon.SinonStub;
   let statStub: sinon.SinonStub;
+  let getConfigurationStub: sinon.SinonStub;
 
   // TODO move into a separate file
   const setupFileSystemMock = (fileSystemStructure: any) => {
@@ -57,11 +58,13 @@ suite('getDirectoryStructure Test Suite', () => {
   setup(() => {
     readdirStub = sinon.stub(fs.promises, 'readdir');
     statStub = sinon.stub(fs.promises, 'stat');
+    getConfigurationStub = sinon.stub(config, 'getConfiguration');
   });
 
   teardown(() => {
     readdirStub.restore();
     statStub.restore();
+    getConfigurationStub.restore();
   });
 
   test('it should return the correct directory structure', async () => {
@@ -86,6 +89,30 @@ suite('getDirectoryStructure Test Suite', () => {
       │  └─ file3
       └─ dir2
          └─ file4`.trim();
+    expect(result).to.equal(expected);
+  });
+
+  test('it should ignore files and directories matching ignore patterns', async () => {
+    const fileSystemStructure = {
+      root: {
+        file1: '',
+        ignoredFile: '',
+        dir1: {
+          file3: '',
+        },
+        ignoredDir: {
+          file4: '',
+        },
+      },
+    };
+    setupFileSystemMock(fileSystemStructure);
+
+    getConfigurationStub.returns(['**/ignoredFile', '**/ignoredDir']);
+
+    const result = (await getDirectoryStructure('root')).trim();
+    const expected = dedent`├─ file1
+                            └─ dir1
+                               └─ file3`.trim();
     expect(result).to.equal(expected);
   });
 
