@@ -1,0 +1,32 @@
+name: Checks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run ESLint
+        run: yarn eslint . --max-warnings=0
+
+      - name: Run Prettier
+        run: yarn prettier --check .
+
+      - name: Run TypeScript
+        run: yarn tsc --noEmit
+
+      - name: Run Tests
+        run: yarn test
