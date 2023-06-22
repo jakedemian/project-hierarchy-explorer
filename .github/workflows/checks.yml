@@ -20,7 +20,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Run ESLint
-        run: yarn eslint . --max-warnings=0
+        run: yarn eslint './**/*.{js,ts,tsx}' --max-warnings=0
 
       - name: Run Prettier
         run: yarn prettier --check .
