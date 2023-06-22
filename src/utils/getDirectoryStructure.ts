@@ -1,15 +1,12 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Minimatch } from 'minimatch';
+import { CONFIG, getConfiguration } from './config';
 
-// TODO add fileIgnorePatterns config, maybe just use existing ignorePatterns config?
 export function getDirectoryStructure(dirPath: string, prefix = ''): string {
   const entries: string[] = fs.readdirSync(dirPath); // TODO should this be synchronous?
   const ignorePatterns: string[] =
-    vscode.workspace
-      .getConfiguration('project-hierarchy-explorer')
-      .get<string[]>('ignorePatterns') || [];
+    getConfiguration(CONFIG.ignorePatterns) || [];
 
   let structure = '';
   const filteredDir = entries.filter(

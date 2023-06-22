@@ -39,7 +39,7 @@ The `ignorePatterns` setting can be added to your workspace or user settings to 
 For example:
 
 ```json
-"project-hierarchy-explorer.ignorePatterns": [".git", "node_modules"]
+"project-hierarchy-explorer.ignorePatterns": [".git", "node_modules", "*.js.map"]
 ```
 
 This will ignore any .git directories and node_modules directories when generating the project hierarchy.
