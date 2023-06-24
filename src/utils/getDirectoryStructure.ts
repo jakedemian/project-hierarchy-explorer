@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Minimatch } from 'minimatch';
-import { getConfiguration } from './config';
+import { getConfiguration } from './getConfiguration';
 import { DirectoryReadError } from '../errors/DirectoryReadError';
 
 export async function getDirectoryStructure(
