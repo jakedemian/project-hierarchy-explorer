@@ -44,6 +44,41 @@ For example:
 
 This will ignore any .git directories and node_modules directories when generating the project hierarchy.
 
+### `suppress-notification`
+
+The `suppress-notification` setting is useful when generating the project hierarchy in a build pipeline or as a task.
+
+```json
+"project-hierarchy-explorer.suppressNotification": true
+```
+
+This will prevent the notification from appearing after the project hierarchy is generated.
+
+## Run As Task
+
+To run the Generate command as a task create a `.vscode/tasks.json`:
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate Project Hierarchy",
+            "type": "shell",
+            "command": "${input:generateProjectHierarchy}", 
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "generateProjectHierarchy",
+            "type": "command",
+            "command": "project-hierarchy-explorer.generate"
+        }
+    ]
+}
+```
+This can be very powerful when used for validation with something like chatGpt.
+
 ## Contribute
 
 https://github.com/jakedemian/project-hierarchy-explorer

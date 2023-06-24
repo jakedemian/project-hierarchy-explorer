@@ -39,6 +39,11 @@
           "type": "array",
           "default": [],
           "description": "Array of patterns to ignore when generating the directory structure."
+        },
+        "project-hierarchy-explorer.suppressNotification": {
+          "type": "boolean",
+          "default": false,
+          "description": "Suppress the notification after generating the project hierarchy."
         }
       }
     }
