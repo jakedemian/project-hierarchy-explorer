@@ -4,3 +4,4 @@ node_modules
 .vscode-test/
 *.vsix
 project-hierarchy.txt
+yarn-error.log
