@@ -44,9 +44,9 @@ For example:
 
 This will ignore any .git directories and node_modules directories when generating the project hierarchy.
 
-### `suppress-notification`
+### `suppressNotification`
 
-The `suppress-notification` setting is useful when generating the project hierarchy in a build pipeline or as a task.
+The `suppressNotification` setting is useful when generating the project hierarchy in a build pipeline or as a task.
 
 ```json
 "project-hierarchy-explorer.suppressNotification": true
