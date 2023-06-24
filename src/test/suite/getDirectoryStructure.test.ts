@@ -7,7 +7,7 @@ import * as sinon from 'sinon';
 
 import * as sinonChai from 'sinon-chai';
 import { DirectoryReadError } from '../../errors/DirectoryReadError';
-import * as config from '../../utils/config';
+import * as config from '../../utils/getConfiguration';
 const dedent = require('dedent');
 
 use(sinonChai);
