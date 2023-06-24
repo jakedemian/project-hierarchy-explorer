@@ -10,12 +10,12 @@ const ROOT_PATH = getRootPath();
 const OUTPUT_FILE_NAME = 'project-hierarchy.txt'; // TODO will change to config
 
 export function activate(context: vscode.ExtensionContext) {
-  let config = vscode.workspace.getConfiguration('project-hierarchy-explorer');
-  let suppressNotification = config.get('suppressNotification');
-  
   let disposable = vscode.commands.registerCommand(
     'project-hierarchy-explorer.generate',
     async () => {
+      let config = vscode.workspace.getConfiguration('project-hierarchy-explorer');
+      let suppressNotification = config.get('suppressNotification');
+
       const filePath = path.join(ROOT_PATH!, OUTPUT_FILE_NAME);
       const hierarchy = await getDirectoryStructure(ROOT_PATH!);
       const output = (await getParentDirectoryName()) + '\n' + hierarchy;
