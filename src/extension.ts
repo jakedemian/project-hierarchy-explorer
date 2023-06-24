@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const filePath = path.join(ROOT_PATH!, OUTPUT_FILE_NAME);
       const hierarchy = await getDirectoryStructure(ROOT_PATH!);
-      const output = getParentDirectoryName() + '\n' + hierarchy;
+      const output = (await getParentDirectoryName()) + '\n' + hierarchy;
 
       fs.writeFileSync(filePath, output);
       vscode.window.showInformationMessage(

@@ -12,7 +12,7 @@ const dedent = require('dedent');
 
 use(sinonChai);
 
-suite('getDirectoryStructure Test Suite', () => {
+suite('getDirectoryStructure', () => {
   let readdirStub: sinon.SinonStub;
   let statStub: sinon.SinonStub;
   let getConfigurationStub: sinon.SinonStub;

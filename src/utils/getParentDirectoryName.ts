@@ -1,12 +1,19 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { getRootPath } from './getRootPath';
+import { DirectoryReadError } from '../errors/DirectoryReadError';
 
-const ROOT_PATH = getRootPath();
+export async function getParentDirectoryName() {
+  const ROOT_PATH = getRootPath();
 
-export function getParentDirectoryName(): string {
   const parentDirPath = path.join(ROOT_PATH!, '..');
-  const parentDirEntries = fs.readdirSync(parentDirPath); // TODO should this be synchronous?
+
+  let parentDirEntries: string[];
+  try {
+    parentDirEntries = await fs.promises.readdir(parentDirPath);
+  } catch (err: any) {
+    throw new DirectoryReadError(parentDirPath, err);
+  }
 
   const parentDirName = parentDirEntries.find(
     file => file === path.basename(ROOT_PATH!)
