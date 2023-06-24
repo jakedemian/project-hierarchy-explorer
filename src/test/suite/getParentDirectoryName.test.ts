@@ -1,78 +1,82 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { use, expect } from 'chai';
+import { use, expect, assert } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import * as getRootPathModule from '../../utils/getRootPath';
 import { getParentDirectoryName } from '../../utils/getParentDirectoryName';
+import { DirectoryReadError } from '../../errors/DirectoryReadError';
 
 use(sinonChai);
 
 suite('getParentDirectoryName', () => {
   let readdirStub: sinon.SinonStub;
   let pathStub: sinon.SinonStub;
-  const FAKE_ROOT_PATH = '/home/username/Projects/project3';
-  const CORRECT_PARENT_DIRECTORY_NAME = 'project3';
+  let getRootPathStub: sinon.SinonStub;
+  const FAKE_ROOT_PATH = '/home/fake/Projects';
+  const FAKE_PARENT_DIRECTORY_NAME = 'project3';
 
   setup(() => {
     readdirStub = sinon.stub(fs.promises, 'readdir');
     pathStub = sinon.stub(path, 'join');
 
-    sinon.stub(getRootPathModule, 'getRootPath').callsFake(() => {
-      return `${FAKE_ROOT_PATH}/${CORRECT_PARENT_DIRECTORY_NAME}`;
-    });
+    getRootPathStub = sinon
+      .stub(getRootPathModule, 'getRootPath')
+      .callsFake(() => {
+        return `${FAKE_ROOT_PATH}/${FAKE_PARENT_DIRECTORY_NAME}`;
+      });
   });
 
   teardown(() => {
+    pathStub.restore();
     readdirStub.restore();
+    getRootPathStub.restore();
   });
 
-  test('it should return the correct directory structure', async () => {
+  test('it should return the correct root directory name', async () => {
     pathStub.callsFake((...args: string[]) => {
-      return args.join('/home/username/Projects');
+      return args.join(FAKE_ROOT_PATH);
     });
 
     readdirStub.callsFake(() => {
-      return Promise.resolve(['project1', 'project2', 'project3', 'project4']);
+      return Promise.resolve([
+        'project1',
+        'project2',
+        FAKE_PARENT_DIRECTORY_NAME,
+        'project4',
+      ]);
     });
 
-    const result = (await getParentDirectoryName()).trim();
-    expect(result).to.equal(CORRECT_PARENT_DIRECTORY_NAME);
+    const result = await getParentDirectoryName();
+    expect(result).to.equal(FAKE_PARENT_DIRECTORY_NAME);
   });
 
-  // test('it should ignore files and directories matching ignore patterns', async () => {
-  //   const fileSystemStructure = {
-  //     root: {
-  //       file1: '',
-  //       ignoredFile: '',
-  //       dir1: {
-  //         file3: '',
-  //       },
-  //       ignoredDir: {
-  //         file4: '',
-  //       },
-  //     },
-  //   };
-  //   setupFileSystemMock(fileSystemStructure);
+  test("it should return 'Root Directory' if the returned array was empty", async () => {
+    pathStub.callsFake((...args: string[]) => {
+      return args.join(FAKE_ROOT_PATH);
+    });
 
-  //   getConfigurationStub.returns(['**/ignoredFile', '**/ignoredDir']);
+    readdirStub.callsFake(() => {
+      return Promise.resolve([]);
+    });
 
-  //   const result = (await getDirectoryStructure('root')).trim();
-  //   const expected = dedent`├─ file1
-  //                           └─ dir1
-  //                              └─ file3`.trim();
-  //   expect(result).to.equal(expected);
-  // });
+    const result = await getParentDirectoryName();
+    expect(result).to.equal('Root Directory');
+  });
 
-  // test('it should throw DirectoryReadError if cannot read directory', async () => {
-  //   readdirStub.rejects(new Error('Cannot read directory'));
+  test('it should throw DirectoryReadError if cannot read directory', async () => {
+    pathStub.callsFake((...args: string[]) => {
+      return args.join(FAKE_ROOT_PATH);
+    });
 
-  //   try {
-  //     await getDirectoryStructure('root');
-  //     assert.fail('Expected DirectoryReadError was not thrown');
-  //   } catch (error: any) {
-  //     expect(error).to.be.instanceOf(DirectoryReadError);
-  //     expect(error.message).to.contain('Cannot read directory');
-  //   }
-  // });
+    readdirStub.rejects(new Error('Cannot read directory'));
+
+    try {
+      await getParentDirectoryName();
+      assert.fail('Expected DirectoryReadError was not thrown');
+    } catch (error: any) {
+      expect(error).to.be.instanceOf(DirectoryReadError);
+      expect(error.message).to.contain('Cannot read directory');
+    }
+  });
 });
