@@ -1,24 +1,42 @@
 {
   "name": "project-hierarchy-explorer",
   "displayName": "Project Hierarchy Explorer",
-  "description": "Quickly and easily output your full project tree / hierarchy to a text file.",
+  "description": "Output and view your entire project's directory structure as text.",
   "author": {
     "name": "Jake Demian",
     "email": "jakedemian@gmail.com"
   },
   "publisher": "jake-demian",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "icon": "images/icon.png",
-  "license": "MIT",
+  "galleryBanner": {
+    "color": "#1a1530",
+    "theme": "dark"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/jakedemian/project-hierarchy-explorer"
+  },
+  "homepage": "https://github.com/jakedemian/project-hierarchy-explorer/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/jakedemian/project-hierarchy-explorer/issues",
+    "email": "jakedemian@gmail.com"
   },
   "engines": {
     "vscode": "^1.79.0"
   },
   "categories": [
+    "Programming Languages",
+    "Visualization",
     "Other"
+  ],
+  "keywords": [
+    "project hierarchy",
+    "directory structure",
+    "project tree",
+    "file explorer",
+    "folder structure"
   ],
   "main": "./out/extension.js",
   "activationEvents": [
@@ -40,6 +58,11 @@
           "default": [],
           "description": "Array of patterns to ignore when generating the directory structure."
         },
+        "project-hierarchy-explorer.outputsTo": {
+          "type": "string",
+          "default": "file",
+          "description": "Where to output the directory structure. Valid values are 'file', 'console', or 'both'."
+        },
         "project-hierarchy-explorer.suppressNotification": {
           "type": "boolean",
           "default": false,
@@ -55,7 +78,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/chai": "^4.3.5",

@@ -3,30 +3,49 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { getRootPath } from './utils/getRootPath';
-import { getParentDirectoryName } from './utils/getParentDirectoryName';
 import { getDirectoryStructure } from './utils/getDirectoryStructure';
+import { getConfiguration } from './utils/getConfiguration';
 
-const ROOT_PATH = getRootPath();
-const OUTPUT_FILE_NAME = 'project-hierarchy.txt'; // TODO will change to config
+export const OUTPUT_FILE_NAME = 'project-hierarchy.txt';
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     'project-hierarchy-explorer.generate',
     async () => {
-      let config = vscode.workspace.getConfiguration('project-hierarchy-explorer');
-      let suppressNotification = config.get('suppressNotification');
+      const rootPath = getRootPath();
 
-      const filePath = path.join(ROOT_PATH!, OUTPUT_FILE_NAME);
-      const hierarchy = await getDirectoryStructure(ROOT_PATH!);
-      const output = (await getParentDirectoryName()) + '\n' + hierarchy;
+      if (!rootPath) {
+        vscode.window.showErrorMessage('No root path found');
+        return;
+      }
 
-      fs.writeFileSync(filePath, output);
+      const hierarchy = await getDirectoryStructure(rootPath);
+      const result = path.basename(rootPath) + '\n' + hierarchy;
 
+      const outputsTo: string = getConfiguration('outputsTo') || 'file';
+
+      if (outputsTo === 'file' || outputsTo === 'both') {
+        const outputFilePath = path.join(rootPath, OUTPUT_FILE_NAME);
+        fs.writeFileSync(outputFilePath, result);
+
+        vscode.workspace.openTextDocument(outputFilePath).then(doc => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+
+      if (outputsTo === 'console' || outputsTo === 'both') {
+        const outputChannel = vscode.window.createOutputChannel(
+          'Project Hierarchy Explorer'
+        );
+        outputChannel.append(result);
+        outputChannel.show();
+      }
+      
+      let suppressNotification = config.get('suppressNotification') || true;
       if (!suppressNotification) {
         vscode.window.showInformationMessage(
-            'Success! Check project-hierarchy.txt in the root of your project'
+            'Success!'
         );
-      }
     }
   );
 
