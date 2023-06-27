@@ -61,6 +61,11 @@
         "project-hierarchy-explorer.outputsTo": {
           "type": "string",
           "default": "file",
+          "enum": [
+            "file",
+            "console",
+            "both"
+          ],
           "description": "Where to output the directory structure. Valid values are 'file', 'console', or 'both'."
         },
         "project-hierarchy-explorer.suppressNotification": {
