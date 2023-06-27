@@ -1,7 +1,4 @@
-<div style="display: flex; align-items: center;">
-  <img src="images/icon.png" width="32" height="32" /> 
-  <h1 style="margin-left: 8px">Project Hierarchy Explorer</h1>
-</div>
+# Project Hierarchy Explorer
 
 🔗 [View on Visual Studio Code Extensions Marketplace](https://marketplace.visualstudio.com/items?itemName=jake-demian.project-hierarchy-explorer)
 
