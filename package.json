@@ -1,24 +1,42 @@
 {
   "name": "project-hierarchy-explorer",
   "displayName": "Project Hierarchy Explorer",
-  "description": "Quickly and easily output your full project tree / hierarchy to a text file.",
+  "description": "Output and view your entire project's directory structure as text.",
   "author": {
     "name": "Jake Demian",
     "email": "jakedemian@gmail.com"
   },
   "publisher": "jake-demian",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "icon": "images/icon.png",
-  "license": "MIT",
+  "galleryBanner": {
+    "color": "#1a1530",
+    "theme": "dark"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/jakedemian/project-hierarchy-explorer"
+  },
+  "homepage": "https://github.com/jakedemian/project-hierarchy-explorer/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/jakedemian/project-hierarchy-explorer/issues",
+    "email": "jakedemian@gmail.com"
   },
   "engines": {
     "vscode": "^1.79.0"
   },
   "categories": [
+    "Programming Languages",
+    "Visualization",
     "Other"
+  ],
+  "keywords": [
+    "project hierarchy",
+    "directory structure",
+    "project tree",
+    "file explorer",
+    "folder structure"
   ],
   "main": "./out/extension.js",
   "activationEvents": [
