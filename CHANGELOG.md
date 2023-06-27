@@ -2,6 +2,10 @@
 
 All notable changes to the "project-hierarchy-explorer" extension will be documented in this file.
 
+## [1.0.5]
+
+- bugfix with running generate command
+
 ## [1.0.4]
 
 - new configuration -> `suppressNotification`. Default behavior is changed to suppressing notification messages. Setting this configuration to `false` will re-enable success messages when generating a hierarchy succeeds.
