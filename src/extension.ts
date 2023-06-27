@@ -34,7 +34,9 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       if (outputsTo === 'console' || outputsTo === 'both') {
-        const outputChannel = vscode.window.createOutputChannel('My Extension');
+        const outputChannel = vscode.window.createOutputChannel(
+          'Project Hierarchy Explorer'
+        );
         outputChannel.append(result);
         outputChannel.show();
       }
