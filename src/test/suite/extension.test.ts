@@ -5,7 +5,6 @@ import { use, expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import * as getDirectoryStructureUtil from '../../utils/getDirectoryStructure';
-import * as getParentDirectoryNameUtil from '../../utils/getParentDirectoryName';
 import { OUTPUT_FILE_NAME, activate } from '../../extension';
 import * as getRootPathModule from '../../utils/getRootPath';
 
@@ -17,7 +16,6 @@ suite('Extension', () => {
   let getDirectoryStructureStub: sinon.SinonStub;
   let showInformationMessageStub: sinon.SinonStub;
   let getRootPathStub: sinon.SinonStub;
-  let getParentDirectoryNameStub: sinon.SinonStub;
 
   const FAKE_ROOT_PATH = '/home/fake/Projects/project3';
   const FAKE_OUTPUT = 'fake└─project├─hierarchy';
@@ -33,10 +31,6 @@ suite('Extension', () => {
       'showInformationMessage'
     );
 
-    getParentDirectoryNameStub = sinon
-      .stub(getParentDirectoryNameUtil, 'getParentDirectoryName')
-      .callsFake(() => Promise.resolve('project3'));
-
     getRootPathStub = sinon
       .stub(getRootPathModule, 'getRootPath')
       .callsFake(() => {
@@ -50,7 +44,6 @@ suite('Extension', () => {
     getDirectoryStructureStub.restore();
     showInformationMessageStub.restore();
     getRootPathStub.restore();
-    getParentDirectoryNameStub.restore();
   });
 
   test('it should register the command successfully', () => {

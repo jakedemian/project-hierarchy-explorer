@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { getRootPath } from './utils/getRootPath';
-import { getParentDirectoryName } from './utils/getParentDirectoryName';
 import { getDirectoryStructure } from './utils/getDirectoryStructure';
 
 export const OUTPUT_FILE_NAME = 'project-hierarchy.txt';
@@ -20,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const hierarchy = await getDirectoryStructure(rootPath);
-      const output = (await getParentDirectoryName()) + '\n' + hierarchy;
+      const output = path.basename(rootPath) + '\n' + hierarchy;
 
       const outputFilePath = path.join(rootPath, OUTPUT_FILE_NAME);
       fs.writeFileSync(outputFilePath, output);
