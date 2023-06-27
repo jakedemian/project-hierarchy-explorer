@@ -15,7 +15,7 @@ export async function getDirectoryStructure(
     throw new DirectoryReadError(dirPath, err);
   }
 
-  const ignorePatterns: string[] = getConfiguration('ignorePatterns') || [];
+  const ignorePatterns: string[] = getConfiguration('ignorePatterns') ?? [];
   const minimatches = ignorePatterns.map(pattern => new Minimatch(pattern));
 
   let structure = '';

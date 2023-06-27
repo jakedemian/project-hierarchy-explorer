@@ -62,6 +62,11 @@
           "type": "string",
           "default": "file",
           "description": "Where to output the directory structure. Valid values are 'file', 'console', or 'both'."
+        },
+        "project-hierarchy-explorer.suppressNotification": {
+          "type": "boolean",
+          "default": true,
+          "description": "Suppress the notification after generating the project hierarchy."
         }
       }
     }

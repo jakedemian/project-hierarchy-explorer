@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
       const hierarchy = await getDirectoryStructure(rootPath);
       const result = path.basename(rootPath) + '\n' + hierarchy;
 
-      const outputsTo: string = getConfiguration('outputsTo') || 'file';
+      const outputsTo: string = getConfiguration('outputsTo') ?? 'file';
 
       if (outputsTo === 'file' || outputsTo === 'both') {
         const outputFilePath = path.join(rootPath, OUTPUT_FILE_NAME);
@@ -39,6 +39,13 @@ export function activate(context: vscode.ExtensionContext) {
         );
         outputChannel.append(result);
         outputChannel.show();
+      }
+
+      let suppressNotification: boolean =
+        getConfiguration('suppressNotification') ?? true;
+
+      if (!suppressNotification) {
+        vscode.window.showInformationMessage('Success!');
       }
     }
   );
