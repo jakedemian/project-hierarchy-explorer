@@ -4,6 +4,8 @@ All notable changes to the "project-hierarchy-explorer" extension will be docume
 
 ## [1.0.4]
 
+- new configuration -> `suppressNotification`. Default behavior is changed to suppressing notification messages. Setting this configuration to `false` will re-enable success messages when generating a hierarchy succeeds.
+  - Contribution by [TailwindMechanics](https://github.com/TailwindMechanics)
 - improved searchability of the extension
 
 ## [1.0.3]

@@ -7,6 +7,7 @@ import { getDirectoryStructure } from './utils/getDirectoryStructure';
 import { getConfiguration } from './utils/getConfiguration';
 
 export const OUTPUT_FILE_NAME = 'project-hierarchy.txt';
+export const SUCCESS_MESSAGE = 'Success!';
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
@@ -45,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
         getConfiguration('suppressNotification') ?? true;
 
       if (!suppressNotification) {
-        vscode.window.showInformationMessage('Success!');
+        vscode.window.showInformationMessage(SUCCESS_MESSAGE);
       }
     }
   );
