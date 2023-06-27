@@ -39,6 +39,11 @@
           "type": "array",
           "default": [],
           "description": "Array of patterns to ignore when generating the directory structure."
+        },
+        "project-hierarchy-explorer.outputsTo": {
+          "type": "string",
+          "default": "file",
+          "description": "Where to output the directory structure. Valid values are 'file', 'console', or 'both'."
         }
       }
     }
