@@ -13,7 +13,7 @@ suite('getParentDirectoryName', () => {
   let readdirStub: sinon.SinonStub;
   let pathStub: sinon.SinonStub;
   let getRootPathStub: sinon.SinonStub;
-  const FAKE_ROOT_PATH = '/home/fake/Projects';
+  const FAKE_PATH = '/home/fake/Projects';
   const FAKE_PARENT_DIRECTORY_NAME = 'project3';
 
   setup(() => {
@@ -23,7 +23,7 @@ suite('getParentDirectoryName', () => {
     getRootPathStub = sinon
       .stub(getRootPathModule, 'getRootPath')
       .callsFake(() => {
-        return `${FAKE_ROOT_PATH}/${FAKE_PARENT_DIRECTORY_NAME}`;
+        return `${FAKE_PATH}/${FAKE_PARENT_DIRECTORY_NAME}`;
       });
   });
 
@@ -35,7 +35,7 @@ suite('getParentDirectoryName', () => {
 
   test('it should return the correct root directory name', async () => {
     pathStub.callsFake((...args: string[]) => {
-      return args.join(FAKE_ROOT_PATH);
+      return args.join(FAKE_PATH);
     });
 
     readdirStub.callsFake(() => {
@@ -53,7 +53,7 @@ suite('getParentDirectoryName', () => {
 
   test("it should return 'Root Directory' if the returned array was empty", async () => {
     pathStub.callsFake((...args: string[]) => {
-      return args.join(FAKE_ROOT_PATH);
+      return args.join(FAKE_PATH);
     });
 
     readdirStub.callsFake(() => {
@@ -66,7 +66,7 @@ suite('getParentDirectoryName', () => {
 
   test('it should throw DirectoryReadError if cannot read directory', async () => {
     pathStub.callsFake((...args: string[]) => {
-      return args.join(FAKE_ROOT_PATH);
+      return args.join(FAKE_PATH);
     });
 
     readdirStub.rejects(new Error('Cannot read directory'));

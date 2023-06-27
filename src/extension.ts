@@ -6,18 +6,25 @@ import { getRootPath } from './utils/getRootPath';
 import { getParentDirectoryName } from './utils/getParentDirectoryName';
 import { getDirectoryStructure } from './utils/getDirectoryStructure';
 
-const ROOT_PATH = getRootPath();
-const OUTPUT_FILE_NAME = 'project-hierarchy.txt'; // TODO will change to config
+export const OUTPUT_FILE_NAME = 'project-hierarchy.txt';
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     'project-hierarchy-explorer.generate',
     async () => {
-      const filePath = path.join(ROOT_PATH!, OUTPUT_FILE_NAME);
-      const hierarchy = await getDirectoryStructure(ROOT_PATH!);
+      const rootPath = getRootPath();
+
+      if (!rootPath) {
+        vscode.window.showErrorMessage('No root path found');
+        return;
+      }
+
+      const hierarchy = await getDirectoryStructure(rootPath);
       const output = (await getParentDirectoryName()) + '\n' + hierarchy;
 
-      fs.writeFileSync(filePath, output);
+      const outputFilePath = path.join(rootPath, OUTPUT_FILE_NAME);
+      fs.writeFileSync(outputFilePath, output);
+
       vscode.window.showInformationMessage(
         'Success! Check project-hierarchy.txt in the root of your project'
       );

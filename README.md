@@ -1,4 +1,9 @@
-# Project Hierarchy Explorer
+<div style="display: flex; align-items: center;">
+  <img src="images/icon.png" width="32" height="32" /> 
+  <h1 style="margin-left: 8px">Project Hierarchy Explorer</h1>
+</div>
+
+🔗 [View on Visual Studio Code Extensions Marketplace](https://marketplace.visualstudio.com/items?itemName=jake-demian.project-hierarchy-explorer)
 
 Project Hierarchy Explorer is a Visual Studio Code extension that generates a hierarchy of your project, and outputs it into a file called `project-hierarchy.txt` located at the root of your project.
 
@@ -24,13 +29,13 @@ Project Hierarchy Explorer is a Visual Studio Code extension that generates a hi
 
 ## Configuration Options
 
-### Config key
-
 All configurations are prepended with `project-hierarchy-explorer`, for example:
 
 ```
 project-hierarchy-explorer.ignorePatterns
 ```
+
+### Configurations
 
 ### `ignorePatterns`
 

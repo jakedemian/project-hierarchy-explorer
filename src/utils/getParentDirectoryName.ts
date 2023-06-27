@@ -4,9 +4,10 @@ import { getRootPath } from './getRootPath';
 import { DirectoryReadError } from '../errors/DirectoryReadError';
 
 export async function getParentDirectoryName() {
-  const ROOT_PATH = getRootPath();
+  const rootPath = getRootPath();
 
-  const parentDirPath = path.join(ROOT_PATH!, '..');
+  // pretty sure this is really stupid... just grab the last directory name from rootPath....
+  const parentDirPath = path.join(rootPath!, '..');
 
   let parentDirEntries: string[];
   try {
@@ -16,7 +17,7 @@ export async function getParentDirectoryName() {
   }
 
   const parentDirName = parentDirEntries.find(
-    file => file === path.basename(ROOT_PATH!)
+    file => file === path.basename(rootPath!)
   );
 
   if (!parentDirName) {
