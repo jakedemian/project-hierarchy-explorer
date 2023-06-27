@@ -5,6 +5,7 @@ const CONFIG_NAMESPACE = 'project-hierarchy-explorer';
 export const CONFIG = {
   ignorePatterns: 'ignorePatterns' as const,
   outputsTo: 'defaultOutput' as const,
+  suppressNotification: 'suppressNotification' as const,
 };
 
 type ConfigKeys = typeof CONFIG;
@@ -13,6 +14,7 @@ type ConfigKey = keyof ConfigKeys;
 interface ConfigTypes {
   ignorePatterns: string[];
   outputsTo: 'console' | 'file' | 'both';
+  suppressNotification: boolean;
 }
 
 export const getConfiguration = <K extends ConfigKey>(

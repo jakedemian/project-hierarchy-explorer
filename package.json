@@ -65,7 +65,7 @@
         },
         "project-hierarchy-explorer.suppressNotification": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Suppress the notification after generating the project hierarchy."
         }
       }
