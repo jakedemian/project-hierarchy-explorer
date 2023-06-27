@@ -72,8 +72,5 @@ suite('Extension', () => {
       path.join(FAKE_ROOT_PATH, OUTPUT_FILE_NAME),
       'project3\n' + FAKE_OUTPUT
     );
-    expect(showInformationMessageStub).to.have.been.calledWith(
-      'Success! Check project-hierarchy.txt in the root of your project'
-    );
   });
 });

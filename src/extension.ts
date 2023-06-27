@@ -4,6 +4,7 @@ import * as path from 'path';
 
 import { getRootPath } from './utils/getRootPath';
 import { getDirectoryStructure } from './utils/getDirectoryStructure';
+import { getConfiguration } from './utils/getConfiguration';
 
 export const OUTPUT_FILE_NAME = 'project-hierarchy.txt';
 
@@ -19,14 +20,24 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const hierarchy = await getDirectoryStructure(rootPath);
-      const output = path.basename(rootPath) + '\n' + hierarchy;
+      const result = path.basename(rootPath) + '\n' + hierarchy;
 
-      const outputFilePath = path.join(rootPath, OUTPUT_FILE_NAME);
-      fs.writeFileSync(outputFilePath, output);
+      const outputsTo: string = getConfiguration('outputsTo') || 'file';
 
-      vscode.window.showInformationMessage(
-        'Success! Check project-hierarchy.txt in the root of your project'
-      );
+      if (outputsTo === 'file' || outputsTo === 'both') {
+        const outputFilePath = path.join(rootPath, OUTPUT_FILE_NAME);
+        fs.writeFileSync(outputFilePath, result);
+
+        vscode.workspace.openTextDocument(outputFilePath).then(doc => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+
+      if (outputsTo === 'console' || outputsTo === 'both') {
+        const outputChannel = vscode.window.createOutputChannel('My Extension');
+        outputChannel.append(result);
+        outputChannel.show();
+      }
     }
   );
 
