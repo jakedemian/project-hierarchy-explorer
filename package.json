@@ -9,10 +9,19 @@
   "publisher": "jake-demian",
   "version": "1.0.4",
   "icon": "images/icon.png",
-  "license": "MIT",
+  "galleryBanner": {
+    "color": "#1a1530",
+    "theme": "dark"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/jakedemian/project-hierarchy-explorer"
+  },
+  "homepage": "https://github.com/jakedemian/project-hierarchy-explorer/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/jakedemian/project-hierarchy-explorer/issues",
+    "email": "jakedemian@gmail.com"
   },
   "engines": {
     "vscode": "^1.79.0"
