@@ -46,6 +46,12 @@ For example:
 
 This will ignore any .git directories and node_modules directories when generating the project hierarchy.
 
+### `outputsTo`
+
+Represents where you would like to output the project hierarchy to.
+
+Valid values are: `'file'` (default), `'console'`, and `'both'`
+
 ## Contribute
 
 https://github.com/jakedemian/project-hierarchy-explorer
