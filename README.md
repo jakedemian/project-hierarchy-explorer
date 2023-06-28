@@ -1,6 +1,16 @@
+<a href="https://marketplace.visualstudio.com/items?itemName=jakedemian.project-hierarchy-explorer" style="display: none;">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/jakedemian/project-hierarchy-explorer/main/images/icon.png" width="140">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/jakedemian/project-hierarchy-explorer/main/images/icon.png" width="140">
+    <img src="https://raw.githubusercontent.com/jakedemian/project-hierarchy-explorer/main/images/blank.png" alt="Logo">
+  </picture>
+</a>
+
 # Project Hierarchy Explorer
 
-🔗 [View on Extensions Marketplace](https://marketplace.visualstudio.com/items?itemName=jake-demian.project-hierarchy-explorer)
+[![Visual Studio Code](https://img.shields.io/badge/--007ACC?logo=visual%20studio%20code&logoColor=ffffff)](https://marketplace.visualstudio.com/items?itemName=jake-demian.project-hierarchy-explorer)&nbsp;
+[![GitHub license](https://badgen.net/github/license/jakedemian/project-hierarchy-explorer)](https://github.com/jakedemian/project-hierarchy-explorer/blob/main/LICENSE.md)&nbsp;
+[![GitHub stars](https://img.shields.io/github/stars/jakedemian/project-hierarchy-explorer.svg?style=social&label=Star)](https://GitHub.com/jakedemian/project-hierarchy-explorer/stargazers/)
 
 Project Hierarchy Explorer provides a command that outputs the hierarchy of your project to either a file or the output console. Easily share and discuss your project structure with other contributors, or give it to your favorite AI for greatly improved clarity in your prompts.
 
