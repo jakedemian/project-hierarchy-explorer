@@ -2,6 +2,10 @@
 
 All notable changes to the "project-hierarchy-explorer" extension will be documented in this file.
 
+## [1.0.6]
+
+- finalized logo and banner color
+
 ## [1.0.5]
 
 - bugfix with running generate command

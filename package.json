@@ -7,10 +7,10 @@
     "email": "jakedemian@gmail.com"
   },
   "publisher": "jake-demian",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "icon": "images/icon.png",
   "galleryBanner": {
-    "color": "#1a1530",
+    "color": "#241a28",
     "theme": "dark"
   },
   "license": "SEE LICENSE IN LICENSE.md",
@@ -39,9 +39,6 @@
     "folder structure"
   ],
   "main": "./out/extension.js",
-  "activationEvents": [
-    "onCommand:project-hierarchy-explorer.generate"
-  ],
   "contributes": {
     "commands": [
       {
