@@ -1,4 +1,4 @@
-<a href="https://marketplace.visualstudio.com/items?itemName=jakedemian.project-hierarchy-explorer" style="display: none;">
+<a href="https://marketplace.visualstudio.com/items?itemName=jake-demian.project-hierarchy-explorer" style="display: none;">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/jakedemian/project-hierarchy-explorer/main/images/icon.png" width="140">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/jakedemian/project-hierarchy-explorer/main/images/icon.png" width="140">
