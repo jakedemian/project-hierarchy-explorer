@@ -39,6 +39,9 @@
     "folder structure"
   ],
   "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:project-hierarchy-explorer.generate"
+  ],
   "contributes": {
     "commands": [
       {
