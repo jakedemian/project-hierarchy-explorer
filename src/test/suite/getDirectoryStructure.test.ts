@@ -111,7 +111,7 @@ suite('getDirectoryStructure', () => {
     expect(result).to.equal(expected);
   });
 
-  test('it should elements that fail to stat are files and move on', async () => {
+  test('it should print files and directories that fail to stat successfully', async () => {
     const fileSystemStructure = {
       root: {
         file1: '',
@@ -139,7 +139,7 @@ suite('getDirectoryStructure', () => {
     expect(result).to.equal(expected);
   });
 
-  test('it should skip directories that fail to readdir', async () => {
+  test('it should skip reading contents of directories that fail to readdir', async () => {
     const fileSystemStructure = {
       root: {
         file1: '',
