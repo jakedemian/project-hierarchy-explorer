@@ -72,7 +72,7 @@ suite('getDirectoryStructure', () => {
       },
     });
 
-    const result = (await getDirectoryStructure([], 'root')).trim();
+    const result = (await getDirectoryStructure('root')).trim();
     const expected = dedent`
       ├─ file1
       ├─ file2
@@ -99,7 +99,7 @@ suite('getDirectoryStructure', () => {
     setupFileSystemMock(fileSystemStructure);
 
     const result = (
-      await getDirectoryStructure(['**/ignoredFile', '**/ignoredDir'], 'root')
+      await getDirectoryStructure('root', ['**/ignoredFile', '**/ignoredDir'])
     ).trim();
     const expected = dedent`├─ file1
                             └─ dir1
@@ -126,7 +126,7 @@ suite('getDirectoryStructure', () => {
     statStub.withArgs('root/inaccessibleDir').rejects(new Error('read error'));
     statStub.withArgs('root/inaccessibleFile').rejects(new Error('read error'));
 
-    const result = (await getDirectoryStructure([], 'root')).trim();
+    const result = (await getDirectoryStructure('root')).trim();
     const expected = dedent`├─ file1
                             ├─ inaccessibleFile
                             ├─ inaccessibleDir
@@ -155,7 +155,7 @@ suite('getDirectoryStructure', () => {
       .withArgs('root/inaccessibleDir')
       .rejects(new Error('read error'));
 
-    const result = (await getDirectoryStructure([], 'root')).trim();
+    const result = (await getDirectoryStructure('root')).trim();
     const expected = dedent`├─ file1
                             ├─ file2
                             ├─ inaccessibleDir

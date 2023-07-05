@@ -3,8 +3,8 @@ import * as path from 'path';
 import { Minimatch } from 'minimatch';
 
 export async function getDirectoryStructure(
-  ignorePatterns: string[],
   dirPath: string,
+  ignorePatterns: string[] = [],
   prefix = ''
 ): Promise<string> {
   let entries: string[];
@@ -39,8 +39,8 @@ export async function getDirectoryStructure(
 
     if (isDirectory) {
       structure += await getDirectoryStructure(
-        ignorePatterns,
         filePath,
+        ignorePatterns,
         isLastInDirectory ? prefix + '   ' : prefix + '│  '
       );
     }

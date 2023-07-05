@@ -83,10 +83,7 @@ suite('Extension', () => {
     const commandHandler = registerCommandStub.getCall(0).args[1];
     await commandHandler();
 
-    expect(getDirectoryStructureStub).to.have.been.calledWith(
-      [],
-      FAKE_ROOT_PATH
-    );
+    expect(getDirectoryStructureStub).to.have.been.calledWith(FAKE_ROOT_PATH);
     expect(writeFileSyncStub).to.have.been.calledWith(
       path.join(FAKE_ROOT_PATH, OUTPUT_FILE_NAME),
       'project3\n' + FAKE_OUTPUT
@@ -105,10 +102,7 @@ suite('Extension', () => {
     const commandHandler = registerCommandStub.getCall(0).args[1];
     await commandHandler();
 
-    expect(getDirectoryStructureStub).to.have.been.calledWith(
-      [],
-      FAKE_ROOT_PATH
-    );
+    expect(getDirectoryStructureStub).to.have.been.calledWith(FAKE_ROOT_PATH);
     expect(writeFileSyncStub).to.not.have.been.calledWith(
       path.join(FAKE_ROOT_PATH, OUTPUT_FILE_NAME),
       'project3\n' + FAKE_OUTPUT
@@ -127,10 +121,7 @@ suite('Extension', () => {
     const commandHandler = registerCommandStub.getCall(0).args[1];
     await commandHandler();
 
-    expect(getDirectoryStructureStub).to.have.been.calledWith(
-      [],
-      FAKE_ROOT_PATH
-    );
+    expect(getDirectoryStructureStub).to.have.been.calledWith(FAKE_ROOT_PATH);
     expect(createOutputChannelStub).to.have.been.calledWith(
       'Project Hierarchy Explorer'
     );
@@ -150,10 +141,7 @@ suite('Extension', () => {
     const commandHandler = registerCommandStub.getCall(0).args[1];
     await commandHandler();
 
-    expect(getDirectoryStructureStub).to.have.been.calledWith(
-      [],
-      FAKE_ROOT_PATH
-    );
+    expect(getDirectoryStructureStub).to.have.been.calledWith(FAKE_ROOT_PATH);
     expect(createOutputChannelStub).to.not.have.been.calledWith(
       'Project Hierarchy Explorer'
     );
@@ -173,10 +161,7 @@ suite('Extension', () => {
     const commandHandler = registerCommandStub.getCall(0).args[1];
     await commandHandler();
 
-    expect(getDirectoryStructureStub).to.have.been.calledWith(
-      [],
-      FAKE_ROOT_PATH
-    );
+    expect(getDirectoryStructureStub).to.have.been.calledWith(FAKE_ROOT_PATH);
     expect(createOutputChannelStub).to.have.been.calledWith(
       'Project Hierarchy Explorer'
     );
