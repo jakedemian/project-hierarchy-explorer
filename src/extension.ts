@@ -20,7 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const hierarchy = await getDirectoryStructure(rootPath);
+      const ignorePatterns: string[] = getConfiguration('ignorePatterns') ?? [];
+      const hierarchy = await getDirectoryStructure(ignorePatterns, rootPath);
       const result = path.basename(rootPath) + '\n' + hierarchy;
 
       const outputsTo: string = getConfiguration('outputsTo') ?? 'file';

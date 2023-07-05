@@ -1,14 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Minimatch } from 'minimatch';
-import { getConfiguration } from './getConfiguration';
 
 export async function getDirectoryStructure(
+  ignorePatterns: string[],
   dirPath: string,
   prefix = ''
 ): Promise<string> {
   let entries: string[];
-
   let structure = '';
 
   try {
@@ -18,9 +17,7 @@ export async function getDirectoryStructure(
     return structure;
   }
 
-  const ignorePatterns: string[] = getConfiguration('ignorePatterns') ?? [];
   const minimatches = ignorePatterns.map(pattern => new Minimatch(pattern));
-
   const filteredDir = entries.filter(
     file => !minimatches.some(minimatch => minimatch.match(file))
   );
@@ -42,6 +39,7 @@ export async function getDirectoryStructure(
 
     if (isDirectory) {
       structure += await getDirectoryStructure(
+        ignorePatterns,
         filePath,
         isLastInDirectory ? prefix + '   ' : prefix + '│  '
       );

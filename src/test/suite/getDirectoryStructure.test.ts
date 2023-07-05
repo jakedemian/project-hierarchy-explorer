@@ -5,7 +5,6 @@ import { use, expect } from 'chai';
 import * as sinon from 'sinon';
 
 import * as sinonChai from 'sinon-chai';
-import * as config from '../../utils/getConfiguration';
 const dedent = require('dedent');
 
 use(sinonChai);
@@ -13,7 +12,6 @@ use(sinonChai);
 suite('getDirectoryStructure', () => {
   let readdirStub: sinon.SinonStub;
   let statStub: sinon.SinonStub;
-  let getConfigurationStub: sinon.SinonStub;
 
   const setupFileSystemMock = (fileSystemStructure: any) => {
     const stubs = new Map();
@@ -53,13 +51,11 @@ suite('getDirectoryStructure', () => {
   setup(() => {
     readdirStub = sinon.stub(fs.promises, 'readdir');
     statStub = sinon.stub(fs.promises, 'stat');
-    getConfigurationStub = sinon.stub(config, 'getConfiguration');
   });
 
   teardown(() => {
     readdirStub.restore();
     statStub.restore();
-    getConfigurationStub.restore();
   });
 
   test('it should return the correct directory structure', async () => {
@@ -76,7 +72,7 @@ suite('getDirectoryStructure', () => {
       },
     });
 
-    const result = (await getDirectoryStructure('root')).trim();
+    const result = (await getDirectoryStructure([], 'root')).trim();
     const expected = dedent`
       ├─ file1
       ├─ file2
@@ -102,9 +98,9 @@ suite('getDirectoryStructure', () => {
     };
     setupFileSystemMock(fileSystemStructure);
 
-    getConfigurationStub.returns(['**/ignoredFile', '**/ignoredDir']);
-
-    const result = (await getDirectoryStructure('root')).trim();
+    const result = (
+      await getDirectoryStructure(['**/ignoredFile', '**/ignoredDir'], 'root')
+    ).trim();
     const expected = dedent`├─ file1
                             └─ dir1
                                └─ file3`.trim();
@@ -130,7 +126,7 @@ suite('getDirectoryStructure', () => {
     statStub.withArgs('root/inaccessibleDir').rejects(new Error('read error'));
     statStub.withArgs('root/inaccessibleFile').rejects(new Error('read error'));
 
-    const result = (await getDirectoryStructure('root')).trim();
+    const result = (await getDirectoryStructure([], 'root')).trim();
     const expected = dedent`├─ file1
                             ├─ inaccessibleFile
                             ├─ inaccessibleDir
@@ -159,7 +155,7 @@ suite('getDirectoryStructure', () => {
       .withArgs('root/inaccessibleDir')
       .rejects(new Error('read error'));
 
-    const result = (await getDirectoryStructure('root')).trim();
+    const result = (await getDirectoryStructure([], 'root')).trim();
     const expected = dedent`├─ file1
                             ├─ file2
                             ├─ inaccessibleDir
