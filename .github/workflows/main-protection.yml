@@ -1,8 +1,7 @@
 name: Check branch name
 on: 
   pull_request:
-    # runs if a pull request is created, a new push is made to an existing pull request, or a pull request is synchronized (updated due to a new push in the pull request's branch), or the base branch is modified
-    types: [opened, reopened, synchronize, edited, ready_for_review]
+    types: [opened, reopened, synchronize, edited]
 jobs:
   build:
     runs-on: ubuntu-latest
