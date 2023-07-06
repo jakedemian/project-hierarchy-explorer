@@ -1,0 +1,15 @@
+name: Check branch name
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check branch name
+      run: |
+        if [[ ! "${{ github.head_ref }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Invalid branch name. Only branches with the pattern v*.*.* can be merged into main."
+          exit 1
+        fi
