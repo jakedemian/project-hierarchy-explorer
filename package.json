@@ -40,13 +40,18 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:project-hierarchy-explorer.generate"
+    "onCommand:project-hierarchy-explorer.generate",
+    "onCommand:project-hierarchy-explorer.generatePartial"
   ],
   "contributes": {
     "commands": [
       {
         "command": "project-hierarchy-explorer.generate",
         "title": "Project Hierarchy Explorer: Generate"
+      },
+      {
+        "command": "project-hierarchy-explorer.generatePartial",
+        "title": "Project Hierarchy Explorer: GeneratePartial"
       }
     ],
     "configuration": {
