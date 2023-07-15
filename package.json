@@ -87,7 +87,7 @@
     "compile": "yarn run clean && tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint './**/*.{js,ts,tsx}' --max-warnings=0",
     "test": "node ./out/test/runTest.js",
     "package": "vsce package"
   },

@@ -27,13 +27,58 @@ Project Hierarchy Explorer provides a command that outputs the hierarchy of your
 ## Usage
 
 1. Open the command palette with `Ctrl+Shift+P` (or `F1`)
-2. Search for and run `Project Hierarchy Explorer: Generate`
+2. Search for and run the [Command](#commands) that you want
 
 ![Alt text](images/command.png)
 
 3. View the output file at the root of your project, or check the console output (depending on your [configuration](#configuration-options)).
 
 ![Alt text](images/sample.png)
+
+## Commands
+
+### **Generate** -> _`project-hierarchy-explorer.generate`_:
+
+- Generates a hierarchy for your entire project starting at the root of the project.
+
+### **Generate Partial** -> _`project-hierarchy-explorer.generatePartial`_:
+
+- After selecting this command you will be prompted to enter the relative path to the directory you wish to use as root for this generation. See the below example for more details.
+
+  <details>
+    <summary>Example</summary>
+
+  Imagine we have a project with the following structure:
+
+  ```
+  src
+  ├─ app
+  │  ├─ favicon.ico
+  │  ├─ globals.css
+  │  └─ layout.tsx
+  ├─ pages
+  │  ├─ index.js
+  │  └─ posts
+  │     └─ [slug].js
+  └─ posts
+    ├─ post1.md
+    └─ post2.md
+  ```
+
+  We wish to only display the hierarchy of the `pages` directory. We could use the `Generate Partial` command to achieve this. Run the command, and in the prompt window enter `src/pages`
+
+  ![generate partial input screenshot](images/generate-partial-input.png)
+
+  and the resulting output in this example would be:
+
+  ```
+  pages
+  ├─ index.js
+  └─ posts
+    └─ [slug].js
+  ```
+
+  </details>
 
 ## Configuration Options
 
@@ -73,7 +118,7 @@ The `suppressNotification` setting is useful when generating the project hierarc
 
 This will prevent the notification from appearing after the project hierarchy is generated.
 
-## Run As Task
+## Running Commands As Tasks
 
 To run the Generate command as a task create a `.vscode/tasks.json`:
 
@@ -98,7 +143,41 @@ To run the Generate command as a task create a `.vscode/tasks.json`:
 }
 ```
 
-This can be very powerful when used for validation with something like chatGpt.
+This can be very powerful when used for validation with something like ChatGPT.
+
+### Note:
+
+If you plan to run the `Generate Partial` command as a task, you will need to supply the `relativePath` parameter in your `tasks.json` instead of relying on the input popup. Use the below example as a reference:
+
+<details>
+<summary>Example</summary>
+
+```json
+// .vscode/tasks.json
+
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate Partial Project Hierarchy",
+      "type": "shell",
+      "command": "${input:generatePartialProjectHierarchy}",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "generatePartialProjectHierarchy",
+      "type": "command",
+      "command": "project-hierarchy-explorer.generatePartial",
+      "args": ["src/utils"]
+    }
+  ]
+}
+```
+
+</details>
+<br/>
 
 ## Contribute
 
