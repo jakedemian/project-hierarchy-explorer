@@ -7,7 +7,12 @@ import { getDirectoryStructure } from '../utils/getDirectoryStructure';
 import { getConfiguration } from '../utils/getConfiguration';
 import { OUTPUT_FILE_NAME, SUCCESS_MESSAGE } from '../extension';
 
-export async function generate() {
+type GenerateOptions = {
+  relativePath?: string;
+};
+
+export async function generate(options: GenerateOptions = {}) {
+  const { relativePath } = options;
   const rootPath = getRootPath();
 
   if (!rootPath) {
@@ -15,12 +20,15 @@ export async function generate() {
     return;
   }
 
+  const targetPath = relativePath
+    ? path.join(rootPath, relativePath)
+    : rootPath;
   const ignorePatterns: string[] = getConfiguration('ignorePatterns') ?? [];
   const hierarchy = await getDirectoryStructure({
-    dirPath: rootPath,
+    dirPath: targetPath,
     ignorePatterns,
   });
-  const result = path.basename(rootPath) + '\n' + hierarchy;
+  const result = path.basename(targetPath) + '\n' + hierarchy;
 
   const outputsTo: string = getConfiguration('outputsTo') ?? 'file';
 
