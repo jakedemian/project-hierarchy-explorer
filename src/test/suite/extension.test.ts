@@ -248,8 +248,6 @@ suite('Extension', () => {
       await commandHandler(FAKE_RELATIVE_PATH);
 
       expect(showInputBoxStub).to.not.have.been.called;
-
-      showInputBoxStub.restore();
     }
   );
 
@@ -266,7 +264,5 @@ suite('Extension', () => {
 
     expect(getDirectoryStructureStub).to.not.have.been.called;
     expect(writeFileSyncStub).to.not.have.been.called;
-
-    showInputBoxStub.restore();
   });
 });
