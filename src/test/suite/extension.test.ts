@@ -24,6 +24,7 @@ suite('Extension', () => {
   let createOutputChannelStub: sinon.SinonStub;
   let appendStub: sinon.SinonStub;
   let showStub: sinon.SinonStub;
+  let showInputBoxStub: sinon.SinonStub;
 
   const FAKE_ROOT_PATH = '/home/fake/Projects/project3';
   const FAKE_OUTPUT = 'fake└─project├─hierarchy';
@@ -52,6 +53,7 @@ suite('Extension', () => {
     createOutputChannelStub.returns(outputChannel);
     appendStub = outputChannel.append;
     showStub = outputChannel.show;
+    showInputBoxStub = sinon.stub(vscode.window, 'showInputBox');
   });
 
   teardown(() => {
@@ -62,6 +64,7 @@ suite('Extension', () => {
     getRootPathStub.restore();
     getConfigurationStub.restore();
     createOutputChannelStub.restore();
+    showInputBoxStub.restore();
   });
 
   test('it should register the command successfully', () => {
@@ -214,8 +217,6 @@ suite('Extension', () => {
 
     getConfigurationStub.withArgs('outputsTo').returns('both');
     getConfigurationStub.withArgs('suppressNotification').returns(true);
-
-    const showInputBoxStub = sinon.stub(vscode.window, 'showInputBox');
     showInputBoxStub.returns(Promise.resolve(FAKE_RELATIVE_PATH));
 
     activate(mockContext);
@@ -231,4 +232,24 @@ suite('Extension', () => {
       'utils\n' + FAKE_OUTPUT
     );
   });
+
+  test(
+    'it should not display the input box during Generate Partial command if a relativePath value ' +
+      'was supplied',
+    async () => {
+      const mockContext = {
+        subscriptions: [],
+      } as any;
+
+      const FAKE_RELATIVE_PATH = 'src/components';
+
+      activate(mockContext);
+      const commandHandler = registerCommandStub.getCall(1).args[1]; // getCall(1) because _generatePartial is the second registered command
+      await commandHandler(FAKE_RELATIVE_PATH);
+
+      expect(showInputBoxStub).to.not.have.been.called;
+
+      showInputBoxStub.restore();
+    }
+  );
 });

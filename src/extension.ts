@@ -12,16 +12,18 @@ export function activate(context: vscode.ExtensionContext) {
 
   let _generatePartial = vscode.commands.registerCommand(
     'project-hierarchy-explorer.generatePartial',
-    async () => {
-      const relativePath = await vscode.window.showInputBox({
-        placeHolder: 'Enter relative path to root directory',
-      });
+    async (relativePath?: string) => {
+      let _relativePath =
+        relativePath ??
+        (await vscode.window.showInputBox({
+          placeHolder: 'Enter relative path to root directory',
+        }));
 
-      if (!relativePath) {
+      if (!_relativePath) {
         return;
       }
 
-      generate({ relativePath });
+      generate({ relativePath: _relativePath });
     }
   );
 
