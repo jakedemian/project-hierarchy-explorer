@@ -252,4 +252,21 @@ suite('Extension', () => {
       showInputBoxStub.restore();
     }
   );
+
+  test('it should not generate if no relativePath value was supplied to Generate Subtree command', async () => {
+    const mockContext = {
+      subscriptions: [],
+    } as any;
+
+    const FAKE_RELATIVE_PATH = '';
+
+    activate(mockContext);
+    const commandHandler = registerCommandStub.getCall(1).args[1]; // getCall(1) because generateSubtreeCommand is the second registered command
+    await commandHandler(FAKE_RELATIVE_PATH);
+
+    expect(getDirectoryStructureStub).to.not.have.been.called;
+    expect(writeFileSyncStub).to.not.have.been.called;
+
+    showInputBoxStub.restore();
+  });
 });
