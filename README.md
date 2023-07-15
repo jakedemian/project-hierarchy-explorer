@@ -41,7 +41,7 @@ Project Hierarchy Explorer provides a command that outputs the hierarchy of your
 
 - Generates a hierarchy for your entire project starting at the root of the project.
 
-### **Generate Partial** -> _`project-hierarchy-explorer.generatePartial`_:
+### **Generate Subtree** -> _`project-hierarchy-explorer.generateSubtree`_:
 
 - After selecting this command you will be prompted to enter the relative path to the directory you wish to use as root for this generation. See the below example for more details.
 
@@ -65,9 +65,9 @@ Project Hierarchy Explorer provides a command that outputs the hierarchy of your
     └─ post2.md
   ```
 
-  We wish to only display the hierarchy of the `pages` directory. We could use the `Generate Partial` command to achieve this. Run the command, and in the prompt window enter `src/pages`
+  We wish to only display the hierarchy of the `pages` directory. We could use the `Generate Subtree` command to achieve this. Run the command, and in the prompt window enter `src/pages`
 
-  ![generate partial input screenshot](images/generate-partial-input.png)
+  ![generate subtree input screenshot](images/generate-subtree-input.png)
 
   and the resulting output in this example would be:
 
@@ -147,7 +147,7 @@ This can be very powerful when used for validation with something like ChatGPT.
 
 ### Note:
 
-If you plan to run the `Generate Partial` command as a task, you will need to supply the `relativePath` parameter in your `tasks.json` instead of relying on the input popup. Use the below example as a reference:
+If you plan to run the `Generate Subtree` command as a task, you will need to supply the `relativePath` parameter in your `tasks.json` instead of relying on the input popup. Use the below example as a reference:
 
 <details>
 <summary>Example</summary>
@@ -159,17 +159,17 @@ If you plan to run the `Generate Partial` command as a task, you will need to su
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Generate Partial Project Hierarchy",
+      "label": "Generate Subtree Project Hierarchy",
       "type": "shell",
-      "command": "${input:generatePartialProjectHierarchy}",
+      "command": "${input:generateSubtreeProjectHierarchy}",
       "problemMatcher": []
     }
   ],
   "inputs": [
     {
-      "id": "generatePartialProjectHierarchy",
+      "id": "generateSubtreeProjectHierarchy",
       "type": "command",
-      "command": "project-hierarchy-explorer.generatePartial",
+      "command": "project-hierarchy-explorer.generateSubtree",
       "args": ["src/utils"]
     }
   ]

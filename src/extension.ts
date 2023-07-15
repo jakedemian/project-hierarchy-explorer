@@ -5,13 +5,13 @@ export const OUTPUT_FILE_NAME = 'project-hierarchy.txt';
 export const SUCCESS_MESSAGE = 'Success!';
 
 export function activate(context: vscode.ExtensionContext) {
-  let _generate = vscode.commands.registerCommand(
+  let generateCommand = vscode.commands.registerCommand(
     'project-hierarchy-explorer.generate',
     async () => generate()
   );
 
-  let _generatePartial = vscode.commands.registerCommand(
-    'project-hierarchy-explorer.generatePartial',
+  let generateSubtreeCommand = vscode.commands.registerCommand(
+    'project-hierarchy-explorer.generateSubtree',
     async (relativePath?: string) => {
       let _relativePath =
         relativePath ??
@@ -27,5 +27,5 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(_generate, _generatePartial);
+  context.subscriptions.push(generateCommand, generateSubtreeCommand);
 }

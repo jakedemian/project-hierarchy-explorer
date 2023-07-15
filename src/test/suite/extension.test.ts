@@ -209,7 +209,7 @@ suite('Extension', () => {
     expect(showInformationMessageStub).to.have.been.calledWith(SUCCESS_MESSAGE);
   });
 
-  test('it generates a partial hierarchy if a relativePath was passed into generate()', async () => {
+  test('it generates a hierarchy subtree if a relativePath was passed into generate()', async () => {
     const mockContext = {
       subscriptions: [],
     } as any;
@@ -220,7 +220,7 @@ suite('Extension', () => {
     showInputBoxStub.returns(Promise.resolve(FAKE_RELATIVE_PATH));
 
     activate(mockContext);
-    const commandHandler = registerCommandStub.getCall(1).args[1]; // using the second command (index 1) for generatePartial
+    const commandHandler = registerCommandStub.getCall(1).args[1]; // getCall(1) because generateSubtreeCommand is the second registered command
     await commandHandler();
 
     expect(getDirectoryStructureStub).to.have.been.calledWith({
@@ -234,7 +234,7 @@ suite('Extension', () => {
   });
 
   test(
-    'it should not display the input box during Generate Partial command if a relativePath value ' +
+    'it should not display the input box during Generate Subtree command if a relativePath value ' +
       'was supplied',
     async () => {
       const mockContext = {
@@ -244,7 +244,7 @@ suite('Extension', () => {
       const FAKE_RELATIVE_PATH = 'src/components';
 
       activate(mockContext);
-      const commandHandler = registerCommandStub.getCall(1).args[1]; // getCall(1) because _generatePartial is the second registered command
+      const commandHandler = registerCommandStub.getCall(1).args[1]; // getCall(1) because generateSubtreeCommand is the second registered command
       await commandHandler(FAKE_RELATIVE_PATH);
 
       expect(showInputBoxStub).to.not.have.been.called;
