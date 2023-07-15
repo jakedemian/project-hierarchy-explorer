@@ -15,25 +15,27 @@
 ![Ratings](https://img.shields.io/visual-studio-marketplace/r/jake-demian.project-hierarchy-explorer)&nbsp;
 ![Size](https://img.shields.io/github/languages/code-size/jakedemian/project-hierarchy-explorer)
 
-Project Hierarchy Explorer provides a command that outputs the hierarchy of your project to either a file or the output console. Easily share and discuss your project structure with other contributors, or give it to your favorite AI for greatly improved clarity in your prompts.
+Project Hierarchy Explorer provides commands that output a text version of your open project's hierarchy. You can output to either a file or the output console depending on your [configuration](#configuration-options). Easily share and discuss your project structure with other contributors, or give it to your favorite AI for greatly improved clarity in your prompts.
 
-![Alt text](images/project-hierarchy-animation.gif)
+![short demo animation](images/project-hierarchy-animation.gif)
 
 ## Features
 
-- Generates a project hierarchy that includes all files and directories, excluding those specified in the `ignorePatterns` setting.
-- The hierarchy is generated in a tree-like structure, providing a clear view of the project's structure.
+- Generate a full project hierarchy that includes all files and directories, excluding those specified in the `ignorePatterns` configuration
+- Generate a subtree hierarchy of just the directory you care about.
+- Commands can be run as [Tasks](#running-commands-as-tasks)
+- Output is generated in a tree-like format, providing a clear view of the project's structure that can easily be copy/pasted.
 
 ## Usage
 
 1. Open the command palette with `Ctrl+Shift+P` (or `F1`)
 2. Search for and run the [Command](#commands) that you want
 
-![Alt text](images/command.png)
+![entering command](images/command.png)
 
 3. View the output file at the root of your project, or check the console output (depending on your [configuration](#configuration-options)).
 
-![Alt text](images/sample.png)
+![sample output](images/sample-output.png)
 
 ## Commands
 
@@ -90,33 +92,33 @@ project-hierarchy-explorer.ignorePatterns
 
 ### Configurations
 
-### `ignorePatterns`
+- ### `ignorePatterns`
 
-The `ignorePatterns` setting can be added to your workspace or user settings to ignore specific files or directories when generating the project hierarchy. It uses the glob pattern syntax.
+  The `ignorePatterns` setting can be added to your workspace or user settings to ignore specific files or directories when generating the project hierarchy. It uses the glob pattern syntax.
 
-For example:
+  For example:
 
-```json
-"project-hierarchy-explorer.ignorePatterns": [".git", "node_modules", "*.js.map"]
-```
+  ```json
+  "project-hierarchy-explorer.ignorePatterns": [".git", "node_modules", "*.js.map"]
+  ```
 
-This will ignore any .git directories and node_modules directories when generating the project hierarchy.
+  This will ignore any .git directories and node_modules directories when generating the project hierarchy.
 
-### `outputsTo`
+- ### `outputsTo`
 
-Represents where you would like to output the project hierarchy to.
+  Represents where you would like to output the project hierarchy to.
 
-Valid values are: `'file'` (default), `'console'`, and `'both'`
+  Valid values are: `'file'` (default), `'console'`, and `'both'`
 
-### `suppressNotification`
+- ### `suppressNotification`
 
-The `suppressNotification` setting is useful when generating the project hierarchy in a build pipeline or as a task.
+  The `suppressNotification` setting is useful when generating the project hierarchy in a build pipeline or as a task.
 
-```json
-"project-hierarchy-explorer.suppressNotification": true
-```
+  ```json
+  "project-hierarchy-explorer.suppressNotification": true
+  ```
 
-This will prevent the notification from appearing after the project hierarchy is generated.
+  This will prevent the notification from appearing after the project hierarchy is generated.
 
 ## Running Commands As Tasks
 
