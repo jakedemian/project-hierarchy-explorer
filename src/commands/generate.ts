@@ -16,7 +16,10 @@ export async function generate() {
   }
 
   const ignorePatterns: string[] = getConfiguration('ignorePatterns') ?? [];
-  const hierarchy = await getDirectoryStructure(rootPath, ignorePatterns);
+  const hierarchy = await getDirectoryStructure({
+    dirPath: rootPath,
+    ignorePatterns,
+  });
   const result = path.basename(rootPath) + '\n' + hierarchy;
 
   const outputsTo: string = getConfiguration('outputsTo') ?? 'file';

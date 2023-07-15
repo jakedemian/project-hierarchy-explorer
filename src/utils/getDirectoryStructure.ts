@@ -1,12 +1,17 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Minimatch } from 'minimatch';
+import { getRootPath } from './getRootPath';
 
-export async function getDirectoryStructure(
-  dirPath: string,
-  ignorePatterns: string[] = [],
-  prefix = ''
-): Promise<string> {
+interface Options {
+  dirPath: string;
+  ignorePatterns?: string[];
+  prefix?: string;
+}
+
+export async function getDirectoryStructure(options: Options): Promise<string> {
+  const { dirPath = getRootPath() as string, ignorePatterns, prefix } = options;
+
   let entries: string[];
   let structure = '';
 
@@ -17,7 +22,9 @@ export async function getDirectoryStructure(
     return structure;
   }
 
-  const minimatches = ignorePatterns.map(pattern => new Minimatch(pattern));
+  const minimatches = ignorePatterns
+    ? ignorePatterns.map(pattern => new Minimatch(pattern))
+    : [];
   const filteredDir = entries.filter(
     file => !minimatches.some(minimatch => minimatch.match(file))
   );
@@ -35,14 +42,15 @@ export async function getDirectoryStructure(
       isDirectory = false;
     }
 
-    structure += prefix + (isLastInDirectory ? '└─ ' : '├─ ') + file + '\n';
+    const linePrefix = prefix ? prefix : '';
+    structure += linePrefix + (isLastInDirectory ? '└─ ' : '├─ ') + file + '\n';
 
     if (isDirectory) {
-      structure += await getDirectoryStructure(
-        filePath,
-        ignorePatterns,
-        isLastInDirectory ? prefix + '   ' : prefix + '│  '
-      );
+      structure += await getDirectoryStructure({
+        dirPath: filePath,
+        ignorePatterns: ignorePatterns,
+        prefix: isLastInDirectory ? linePrefix + '   ' : linePrefix + '│  ',
+      });
     }
   }
   return structure;
