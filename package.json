@@ -40,13 +40,18 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:project-hierarchy-explorer.generate"
+    "onCommand:project-hierarchy-explorer.generate",
+    "onCommand:project-hierarchy-explorer.generateSubtree"
   ],
   "contributes": {
     "commands": [
       {
         "command": "project-hierarchy-explorer.generate",
         "title": "Project Hierarchy Explorer: Generate"
+      },
+      {
+        "command": "project-hierarchy-explorer.generateSubtree",
+        "title": "Project Hierarchy Explorer: Generate Subtree"
       }
     ],
     "configuration": {
@@ -82,7 +87,7 @@
     "compile": "yarn run clean && tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint './**/*.{js,ts,tsx}' --max-warnings=0",
     "test": "node ./out/test/runTest.js",
     "package": "vsce package"
   },
