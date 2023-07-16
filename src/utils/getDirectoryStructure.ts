@@ -1,46 +1,56 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Minimatch } from 'minimatch';
-import { getConfiguration } from './getConfiguration';
-import { DirectoryReadError } from '../errors/DirectoryReadError';
+import { getRootPath } from './getRootPath';
 
-export async function getDirectoryStructure(
-  dirPath: string,
-  prefix = ''
-): Promise<string> {
+interface Options {
+  dirPath: string;
+  ignorePatterns?: string[];
+  prefix?: string;
+}
+
+export async function getDirectoryStructure(options: Options): Promise<string> {
+  const { dirPath = getRootPath() as string, ignorePatterns, prefix } = options;
+
   let entries: string[];
+  let structure = '';
+
   try {
     entries = await fs.promises.readdir(dirPath);
   } catch (err: any) {
-    throw new DirectoryReadError(dirPath, err);
+    console.warn('Failed to read directory: ', err);
+    return structure;
   }
 
-  const ignorePatterns: string[] = getConfiguration('ignorePatterns') ?? [];
-  const minimatches = ignorePatterns.map(pattern => new Minimatch(pattern));
-
-  let structure = '';
+  const minimatches = ignorePatterns
+    ? ignorePatterns.map(pattern => new Minimatch(pattern))
+    : [];
   const filteredDir = entries.filter(
     file => !minimatches.some(minimatch => minimatch.match(file))
   );
 
   for (const [index, file] of filteredDir.entries()) {
     const filePath = path.join(dirPath, file);
-
-    let isDirectory: boolean;
-    try {
-      isDirectory = (await fs.promises.stat(filePath)).isDirectory();
-    } catch (err) {
-      throw new Error(`Failed to stat ${filePath}: ${err}`);
-    }
-
     const isLastInDirectory = index === filteredDir.length - 1;
 
-    structure += prefix + (isLastInDirectory ? '└─ ' : '├─ ') + file + '\n';
+    let isDirectory: boolean;
+
+    try {
+      isDirectory = (await fs.promises.stat(filePath))?.isDirectory();
+    } catch (err) {
+      console.warn(`Failed to stat ${filePath}: ${err}`);
+      isDirectory = false;
+    }
+
+    const linePrefix = prefix ? prefix : '';
+    structure += linePrefix + (isLastInDirectory ? '└─ ' : '├─ ') + file + '\n';
+
     if (isDirectory) {
-      structure += await getDirectoryStructure(
-        filePath,
-        isLastInDirectory ? prefix + '   ' : prefix + '│  '
-      );
+      structure += await getDirectoryStructure({
+        dirPath: filePath,
+        ignorePatterns: ignorePatterns,
+        prefix: isLastInDirectory ? linePrefix + '   ' : linePrefix + '│  ',
+      });
     }
   }
   return structure;
