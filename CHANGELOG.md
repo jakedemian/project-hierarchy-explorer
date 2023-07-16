@@ -2,6 +2,12 @@
 
 All notable changes to the "project-hierarchy-explorer" extension will be documented in this file.
 
+## [1.0.8]
+
+- New command added: Generate Subtree. See the [README](/README.md) for details.
+- Fixed a bug where hierarchy wouldn't generate if a file/folder in project doesn't have read permissions.
+- Some large performance gains for bigger projects
+
 ## [1.0.7]
 
 - README updates
